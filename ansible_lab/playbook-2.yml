@@ -1,0 +1,14 @@
+---
+ 
+- name: playbook-2
+  hosts: cisco_routers
+  gather_facts: false
+  tasks:
+ 
+    - name: Get config 
+      ios_facts:
+        gather_subset: all
+ 
+    - name: Display the message
+      debug:
+        msg: "The  {{ ansible_net_hostname }} has  {{ ansible_net_iostype }}  platform"
