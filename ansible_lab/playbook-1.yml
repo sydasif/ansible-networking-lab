@@ -12,4 +12,4 @@
  
     - name: Display the message
       debug:
-        msg: "The  {{ ansible_net_hostname }} has has  {{ ansible_net_iostype }}  platform"
+        msg: "The  {{ ansible_net_hostname }} has {{ ansible_net_iostype }}  platform"
