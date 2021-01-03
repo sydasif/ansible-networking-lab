@@ -1,0 +1,8 @@
+---
+- name: config from file
+  gather_facts: false
+  hosts: r1 
+  tasks:
+    - name: config R1
+      ios_config:
+        src: /root/router/config1.txt

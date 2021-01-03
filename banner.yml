@@ -1,0 +1,18 @@
+---
+- name: Configre Banner MOTD and Login
+  gather_facts: false
+  host: all
+  tasks:
+    - name: config Banner MOTD
+      ios_banner:
+        banner: motd 
+        text: |
+          Wellcome to the {{ inventory_hostname }}
+        state: present
+
+    - name: config Banner Login
+      ios_banner:
+        banner: login 
+        text: |
+          Only Autorized Personal Allowed
+        state: present

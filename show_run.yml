@@ -1,0 +1,17 @@
+---
+- name: Show Run
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: Show Run
+      ios_command:
+        commands:
+         - show run   
+      register: config
+
+    - name: Save run config in file
+      copy:
+        content: "{{ config.stdout[0] }}"
+        dest: "/root/show/show_run_{{ inventory_hostname }}.txt"
+    - debug:
+        var: config  
