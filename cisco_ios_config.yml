@@ -21,4 +21,5 @@
       register:
         ios_command_output
     - debug:
-        var: ios_command_output
+        var: ios_command_output.stdout_lines
+        
