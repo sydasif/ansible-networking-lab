@@ -1,7 +1,7 @@
 ---
 - name: Configre Banner MOTD and Login
   gather_facts: false
-  host: all
+  hosts: all
   tasks:
     - name: config Banner MOTD
       ios_banner:
