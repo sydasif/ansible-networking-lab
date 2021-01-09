@@ -1,12 +1,12 @@
 ---
-- name: config from file
+- name: "Playbook: configure from text file"
   gather_facts: false
   hosts: cisco 
 
   tasks:
-    - name: config R1
+    - name: "T1: configure device from text file"
       ios_config:
         src: /root/router/config1.txt
       register: output
-    
+      
     - debug: var=output.stdout_lines
