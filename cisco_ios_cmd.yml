@@ -1,10 +1,10 @@
 ---
-- name: iOS Show Commands
+- name: "Playbook: IOS Show Commands"
   hosts: switch
   gather_facts: false
 
   tasks:
-    - name: show version and capture in variable
+    - name: "T1: show version and capture in variable"
       ios_command:
         commands:
          - show version
