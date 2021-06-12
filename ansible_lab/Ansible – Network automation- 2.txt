@@ -1,6 +1,5 @@
 Ansible – Network automation- 2
 
-January 5, 2020Simple Ansible – Network automation- 2By admin DevOps, Home, Networking, Python  0 Comments
 First part : Simple Ansible – Network automation- 1
 
 In second part, we progress more and add playbook and explain more :
@@ -44,5 +43,3 @@ the module
 The third part is task 2:
 this task uses info from previous task
 debug lets use the variable in message.
-
-
