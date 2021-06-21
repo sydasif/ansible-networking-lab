@@ -10,11 +10,7 @@
 
 **Efficient:** No extra software on your server, means more resources for your applications. 
 
-## Ansible – Network automation
-
-Here are some basic information about ansible:
-
-### Ansible component:
+## Ansible component:
 
 **Control node:** A central management of ansible and ansible code run on it and gather information about the managed node.
 
