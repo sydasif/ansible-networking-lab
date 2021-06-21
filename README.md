@@ -1,5 +1,15 @@
 # Ansible
 
+**Why Ansible?**
+
+**Simple:** Ansible uses a simple syntax written in YAML format called playbook.
+
+**Agentless:** There are no agent/software or additional firewall ports that you need to install on the client's systems or hosts which you want to automate.
+
+**Powerful and Flexible:** Ansible has powerful features that enable you to model even the most complex IT workflow.
+
+**Efficient:** No extra software on your server, means more resources for your applications. 
+
 ## Ansible – Network automation
 
 Here are some basic information about ansible:
