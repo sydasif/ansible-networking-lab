@@ -90,8 +90,10 @@ We progress more and add Inventory list to our command and remove more details f
 **Creating inventory file:**
 
 [cisco_routers]
-R1 ansible_host=192.168.52.71 ansible_network_os=ios ansible_user=admin ansible_connection=network_cli
-S1 ansible_host=192.168.52.72 ansible_network_os=ios ansible_user=admin ansible_connection=network_cli
+
+`R1 ansible_host=192.168.52.71 ansible_network_os=ios ansible_user=admin ansible_connection=network_cli`
+
+`S1 ansible_host=192.168.52.72 ansible_network_os=ios ansible_user=admin ansible_connection=network_cli`
 
 change playbook-1.yml file according to this change as playbook-2.yml :
 
