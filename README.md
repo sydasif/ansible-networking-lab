@@ -50,6 +50,7 @@ We progress more and add playbook and explain more, the below text file is simpl
 
 playbook-1.yml :
 
+```yaml
 ---
 - name: playbook-1
   connection: network_cli
@@ -63,8 +64,8 @@ playbook-1.yml :
  
     - name: Display the message
       debug:
-        msg: "The  {{ ansible_net_hostname }} has has  {{ ansible_net_iostype }}  platform"
-
+        msg: "The  {{ ansible_net_hostname }} has has  {{ ansible_net_iostype }}  platform" 
+```        
 The new command to execute :
 
 ansible-playbook -i 192.168.52.72, -u admin -k -e ansible_network_os=ios playbook-1.yml
@@ -95,6 +96,7 @@ change playbook-1.yml file according to this change as playbool-2.yml :
 
 playbook-2.yml
 
+```yaml
 ---
 - name: playbook-2
   hosts: cisco_routers
@@ -108,7 +110,7 @@ playbook-2.yml
     - name: Display the message
       debug:
         msg: "The  {{ ansible_net_hostname }} has  {{ ansible_net_iostype }}  platform"
-
+```
 Now new command will be :
 
 > ansible-playbook -i inventory  -k playbook-2.yml
