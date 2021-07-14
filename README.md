@@ -77,7 +77,7 @@ We progress more and add playbook, the below text file is a simple example of th
     - name: Display the message
       debug:
         msg: "The  {{ ansible_net_hostname }} has has  {{ ansible_net_iostype }}  platform" 
-```        
+```
 
 The new command to execute:
 
@@ -85,9 +85,9 @@ The new command to execute:
 
 As you can see there are some changes in the ansible command:
 
-1.  -c : connection moved to playbook >> connection: network_cli
-2.  all: moved to playbook >> hosts: all
-3.  -m: moved to the playbook
+1. -c : connection moved to playbook >> connection: network_cli
+2. all: moved to playbook >> hosts: all
+3. -m: moved to the playbook
 
 The second part of the playbook is task 1:
 
