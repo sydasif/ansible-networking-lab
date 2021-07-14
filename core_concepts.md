@@ -41,24 +41,24 @@ employee:
 
 ## Inventory
 
-1. Inventory is the target host in our infrastructure which we want to operate by ansible. We put all the hosts information into one file called inventory.
+1. Inventory is the target host in our infrastructure which we want to managed by ansible. We put all the hosts information (IP Address/FQDN) into one file called inventory.
 2. The default inventory file is /etc/ansible/hosts.
-3. Inventory is a text file in INI format.
-4. In bracket *[]* is a group name and below are member.
+3. Inventory is a file in INI or YAML format.
+4. The headings in brackets are group names, which are used in classifying hosts.
 5. *server* group is group of group.
-6. mail.com is not include in any group, but in a default group *all*.
+6. mail.example.com is not include in any group, but in a default group *all*.
 
 ```INI
-mail.com
+mail.example.com
 
-[webserver]
-foo.abc.com
-bar.xyz.com
+[webservers]
+foo.example.com
+bar.example.com
 
-[dbserver]
-one.exm.com
-two.exm.com
-
+[dbservers]
+one.example.com
+two.example.com
+three.example.com
 [cisco]
 cisco.test.com
 
@@ -66,3 +66,21 @@ cisco.test.com
 webserver
 dbserver
 ```
+
+Here’s that same basic inventory file in YAML format:
+```YAML
+all:
+  hosts:
+    mail.example.com:
+  children:
+    webservers:
+      hosts:
+        foo.example.com:
+        bar.example.com:
+    dbservers:
+      hosts:
+        one.example.com:
+        two.example.com:
+        three.example.com:
+```        
+For more information on inventory see [Ansible Documentation](https://docs.ansible.com/ansible/2.9/user_guide/intro_inventory.html#)
