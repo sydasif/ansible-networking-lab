@@ -59,12 +59,19 @@ bar.example.com
 one.example.com
 two.example.com
 three.example.com
-[cisco]
-cisco.test.com
 
 [server:children]
 webserver
 dbserver
+
+[cisco]
+R1 ansible_host=192.168.52.71 
+S1 ansible_host=192.168.52.72 
+
+[cisco:vars]
+ansible_user=admin
+ansible_network_os=ios  
+ansible_connection=network_cli
 ```
 
 Here’s that same basic inventory file in YAML format:
