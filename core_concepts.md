@@ -140,7 +140,9 @@ An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate
 >
 > ansible -i host web -m raw -a "pwd"
 >
-> *ansible all -i 192.168.52.71, -c network_cli -u admin -k -m ios_facts -e ansible_network_os=ios*
+> ansible all -m ios_command -a "command='show ip interface brief'"
+>
+> ansible all -i 192.168.52.71, -c network_cli -u admin -k -m ios_facts -e ansible_network_os=ios
 
 1. -i: list of managed nodes which they are separated by comma
 2. -c: Connection type
