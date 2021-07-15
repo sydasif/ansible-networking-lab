@@ -7,12 +7,13 @@
       ios_banner:
         banner: motd 
         text: |
-          Wellcome to the {{ inventory_hostname }}
+          Welcome to the {{ inventory_hostname }}
+          If not authorized leave it
         state: present
 
     - name: "T1: Configure Banner Login"
       ios_banner:
         banner: login 
         text: |
-          Only Autorized Personal Allowed
+          Only Authorized Personal Allowed
         state: present
