@@ -136,8 +136,18 @@ For example:
 
 An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate a single task on one or more managed nods.
 
-1. ansible -i hosts all -m ping
-2. ansible -i host web -m raw -a "pwd"
+> ansible -i hosts all -m ping
+>
+> ansible -i host web -m raw -a "pwd"
+>
+> *ansible all -i 192.168.52.71, -c network_cli -u admin -k -m ios_facts -e ansible_network_os=ios*
+
+1. -i: list of managed nodes which they are separated by comma
+2. -c: Connection type
+3. -u: Username
+4. -k: Ask for a password
+5. -m: Module name
+6. -e: Network platform
 
 ## Ansible Playbook
 
