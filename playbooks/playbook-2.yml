@@ -1,0 +1,14 @@
+---
+ 
+- name: "Playbook-2: Get ios facts"
+  hosts: cisco_routers
+  gather_facts: false
+  tasks:
+ 
+    - name: "P2T1: Get config from ios_facts"  
+      ios_facts:
+        gather_subset: all
+ 
+    - name: "P2T2: Display debug message"
+      debug:
+        msg: "The  {{ ansible_net_hostname }} has  {{ ansible_net_iostype }}  platform"
