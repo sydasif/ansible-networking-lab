@@ -1,0 +1,16 @@
+---
+  - name: "PLAY 1: Configure All Lan Switches"
+    hosts: access01
+    tasks:
+      - name: configure interface
+        ios_interface:
+          name: GigabitEthernet0/2
+          description: test-interface
+          speed: 100
+          duplex: half
+          mtu: 512
+      - name: make interface up
+        ios_interface:
+          name: GigabitEthernet0/2
+          enabled: True
+

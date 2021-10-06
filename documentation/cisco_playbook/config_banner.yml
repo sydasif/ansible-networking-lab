@@ -1,0 +1,19 @@
+---
+- name: "Playbook: Configure Banner MOTD and Login" 
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: "T1: Configure Banner MOTD"
+      ios_banner:
+        banner: motd 
+        text: |
+          Welcome to the {{ inventory_hostname }}
+          If not authorized leave it
+        state: present
+
+    - name: "T1: Configure Banner Login"
+      ios_banner:
+        banner: login 
+        text: |
+          Only Authorized Personal Allowed
+        state: present

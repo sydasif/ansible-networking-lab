@@ -1,0 +1,15 @@
+---
+- name: IOS Show Commands
+  hosts: lab
+  gather_facts: false
+  
+  tasks:
+    - name: Show commands for all 
+      ios_command:
+        commands:
+          - show version | i IOS
+          - show run | i hostname
+      register: output
+      
+    - debug: 
+        var: output.stdout_lines

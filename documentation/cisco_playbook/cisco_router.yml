@@ -1,0 +1,14 @@
+---
+- name: IOS Show Commands
+  hosts: router
+  gather_facts: false
+  
+  tasks:
+    - name: ios show commands for router
+      ios_command:
+        commands:
+          - show version | i IOS
+          - show run | i hostname
+      register: output
+      
+    - debug: var=output.stdout_lines
