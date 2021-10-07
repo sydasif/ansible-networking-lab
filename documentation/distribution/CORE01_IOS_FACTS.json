@@ -1,0 +1,277 @@
+{
+    "ansible_facts": {
+        "ansible_net_all_ipv4_addresses": [
+            "10.1.1.1"
+        ],
+        "ansible_net_all_ipv6_addresses": [],
+        "ansible_net_api": "cliconf",
+        "ansible_net_filesystems": [
+            "flash0:"
+        ],
+        "ansible_net_filesystems_info": {
+            "flash0:": {
+                "spacefree_kb": 1971268.0,
+                "spacetotal_kb": 2092496.0
+            }
+        },
+        "ansible_net_gather_network_resources": [],
+        "ansible_net_gather_subset": [
+            "hardware",
+            "default",
+            "interfaces"
+        ],
+        "ansible_net_hostname": "CORE-1",
+        "ansible_net_image": "flash0:/vios_l2-adventerprisek9-m",
+        "ansible_net_interfaces": {
+            "GigabitEthernet0/0": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0000",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet0/1": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0001",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "iGbE"
+            },
+            "GigabitEthernet0/2": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0002",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet0/3": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0003",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet1/0": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0004",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "iGbE"
+            },
+            "GigabitEthernet1/1": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0005",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "iGbE"
+            },
+            "GigabitEthernet1/2": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0006",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet1/3": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0007",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet2/0": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0008",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet2/1": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.0009",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet2/2": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.000a",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet2/3": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.000b",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet3/0": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.000c",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet3/1": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.000d",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet3/2": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.000e",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "down",
+                "type": "iGbE"
+            },
+            "GigabitEthernet3/3": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": "Auto",
+                "ipv4": [],
+                "lineprotocol": null,
+                "macaddress": "0c28.d697.000f",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "iGbE"
+            },
+            "Vlan1": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.1.1.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0c28.d697.8001",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Ethernet SVI"
+            }
+        },
+        "ansible_net_iostype": "IOS",
+        "ansible_net_memfree_mb": 347357.45703125,
+        "ansible_net_memtotal_mb": 451642.65625,
+        "ansible_net_model": "IOSv",
+        "ansible_net_neighbors": {
+            "GigabitEthernet0/1": [
+                {
+                    "host": "CORE-RTR.test.com",
+                    "port": "FastEthernet1/0"
+                }
+            ],
+            "GigabitEthernet1/0": [
+                {
+                    "host": "CORE-2.test.com",
+                    "port": "GigabitEthernet1/0"
+                }
+            ],
+            "GigabitEthernet1/1": [
+                {
+                    "host": "CORE-2.test.com",
+                    "port": "GigabitEthernet1/1"
+                }
+            ],
+            "GigabitEthernet3/3": [
+                {
+                    "host": "R1.test.com",
+                    "port": "FastEthernet0/1"
+                }
+            ]
+        },
+        "ansible_net_python_version": "2.7.18",
+        "ansible_net_serialnum": "930YBTIC3MN",
+        "ansible_net_system": "ios",
+        "ansible_net_version": "15.2(CML_NIGHTLY_20190423)FLO_DSGS7",
+        "ansible_network_resources": {}
+    },
+    "changed": false,
+    "failed": false,
+    "warnings": [
+        "default value for `gather_subset` will be changed to `min` from `!config` v2.11 onwards"
+    ]
+}
