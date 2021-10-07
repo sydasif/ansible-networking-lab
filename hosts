@@ -4,3 +4,6 @@ r1 ansible_host=9.9.9.2
 [distribution]
 core-1 ansible_host=10.1.1.1
 core-2 ansible_host=10.1.1.2
+
+[core]
+core-rtr ansible_host=10.1.1.4
