@@ -1,10 +1,10 @@
-# Ansible
+# [Ansible for Network Automation](https://docs.ansible.com/ansible/2.9/network/index.html) 
 
 ## What is Ansible
 
 1. Ansible is an open-source configuration management and provisioning tool, similar to Chef, Puppet or Salt.
 2. Ansible lets you control and configure nodes from a single machine.
-3. It uses SSH to connect to servers and run the configuration task.
+3. It uses SSH and Paramiko to connect to network devices and run the configuration task.
 
 **Why Ansible?**
 
@@ -15,6 +15,10 @@
 **Powerful and Flexible:** Ansible has powerful features that enable you to model even the most complex IT workflow.
 
 **Efficient:** No extra software on your server, means more resources for your applications.
+
+## Getting Started with Ansible for Network Automation
+
+Ansible modules support a wide range of vendors, device types, and actions, so you can manage your entire network with a single automation tool.
 
 ## Ansible component
 
@@ -45,4 +49,12 @@ For installation, you can use ansible documentation [**website**](https://docs.a
 
 #### To test your installation
 
-> *ansible --version*
+```console
+ansible --version
+ansible all -m ping
+```
+
+## Execution on the Control Node
+
+Unlike most Ansible modules, network modules do not run on the managed nodes. Behind the scenes, however, network modules use a different methodology than the other (Linux/Unix and Windows) modules use. Ansible is written and executed in Python. Because the majority of network devices can not run Python, the Ansible network modules are executed on the Ansible control node. Network modules also use the control node as a destination for backup files. Network modules write backup files on the control node, usually in the backup directory under the playbook root directory.
+
