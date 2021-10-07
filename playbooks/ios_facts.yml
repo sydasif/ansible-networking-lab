@@ -1,11 +1,12 @@
 ---
-- name: gather facts
-  hosts: all
+- name: Playbook-01-Gather Facts
+  hosts: distribution 
   tasks:
-    - name: IOS Facts On All
+    - name: ios facts on distribution
       ios_facts:
       register: output
-    - name: copy 
+
+    - name: copy ios facts to file 
       copy:
         content: "{{ output | to_nice_json }}"
-        dest: "./documentation/output/{{ inventory_hostname }}_ouput.json"
+        dest: "./documentation/distribution/{{ inventory_hostname }}_IOS_FACTS.json"
