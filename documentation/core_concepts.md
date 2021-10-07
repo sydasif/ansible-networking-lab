@@ -1,18 +1,16 @@
-# Ansible Core Concepts
+# YAML Introduction
 
-## YAML Introduction
-
-### What is YAML
+## What is YAML
 
 [YMAL](https://yaml.org) is a human-readable structured data format, it's less complex than XML or JSON and it allows you to provide configuration settings.
 
-#### YAML Basic Rules
+### YAML Basic Rules
 
 1. YAML files should end in .yaml or .yml
 2. YAML is case sensitive
 3. YAML does not allow the use of tabs, spaces are used instead of tab.
 
-#### YAML Basic Data Types
+### YAML Basic Data Types
 
 **scalers** is a single value and a variable, it can be string or integer.
 
