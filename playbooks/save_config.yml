@@ -1,0 +1,13 @@
+---
+- name: "Play: save config" 
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: copy run config to startup 
+      ios_command:
+        commands: wr
+      register: output
+
+    - debug:
+        var: output.stdout_lines
+        
