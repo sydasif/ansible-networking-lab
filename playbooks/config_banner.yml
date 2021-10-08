@@ -1,0 +1,28 @@
+---
+- name: "Playbook: Configure Banner MOTD and Login" 
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: "T1: Configure Banner MOTD"
+      ios_banner:
+        banner: motd 
+        text: |
+          $$$ Welcome to the {{ inventory_hostname }} $$$
+           If not authorized leave it now
+        state: present
+
+    - name: "T2: Configure Banner Login"
+      ios_banner:
+        banner: login 
+        text: |
+          Only Authorized Personal Allowed
+          $$ Banner By Ansible $$
+        state: present
+    - name: "T3: Remove Incoming Banner"
+      ios_banner:
+        banner: incoming 
+        state: absent
+    - name: "T4: Remove Exec Banner"
+      ios_banner:
+        banner: exec 
+        state: absent
