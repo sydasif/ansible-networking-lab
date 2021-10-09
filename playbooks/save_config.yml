@@ -6,12 +6,11 @@
     - name: copy run config to startup 
       ios_command:
         commands: wr
-      register: output
 
     - name: show run 
       ios_command:
         commands: show run 
-      register: config  
+      register: config
 
     - name: save output to backup folder 
       copy: 
