@@ -1,0 +1,149 @@
+Building configuration...
+
+Current configuration : 1816 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CORE-RTR
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$51uT$DXgVJsFcmWor8bcvlFZtU.
+!
+no aaa new-model
+memory-size iomem 5
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip domain name test.com
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$W2Rb$I9Qj/hXlwJm1jZMkbFJvE.
+!
+!
+ip tcp synwait-time 5
+! 
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ description link-to-core_1
+ no ip address
+ shutdown
+ speed 100
+ full-duplex
+!
+interface FastEthernet1/0
+!
+interface FastEthernet1/1
+!
+interface FastEthernet1/2
+!
+interface FastEthernet1/3
+!
+interface FastEthernet1/4
+!
+interface FastEthernet1/5
+!
+interface FastEthernet1/6
+!
+interface FastEthernet1/7
+!
+interface FastEthernet1/8
+!
+interface FastEthernet1/9
+!
+interface FastEthernet1/10
+!
+interface FastEthernet1/11
+!
+interface FastEthernet1/12
+!
+interface FastEthernet1/13
+!
+interface FastEthernet1/14
+!
+interface FastEthernet1/15
+!
+interface Vlan1
+ ip address 10.1.1.4 255.255.255.0
+!
+router ospf 1
+ log-adjacency-changes
+ network 10.1.1.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+no cdp log mismatch duplex
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+banner login ^C
+Only Authorized Personal Allowed
+$$ Banner By Ansible $$
+^C
+banner motd ^C
+$$$ Welcome to the CORE-RTR $$$
+ If not authorized leave it now
+^C
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ logging synchronous
+ login local
+!
+!
+end
