@@ -1,5 +1,5 @@
 ---
-- name: "Play: save config" 
+- name: "Play: save config and take backup" 
   hosts: all
   gather_facts: false
   tasks:
@@ -8,6 +8,12 @@
         commands: wr
       register: output
 
-    - debug:
-        var: output.stdout_lines
-        
+    - name: show run 
+      ios_command:
+        commands: show run 
+      register: config  
+
+    - name: save output to backup folder 
+      copy: 
+        content: "{{ config.stdout[0] }}"
+        dest: "./configuration/backup/show_run_{{ inventory_hostname.lower() }}.txt" 
