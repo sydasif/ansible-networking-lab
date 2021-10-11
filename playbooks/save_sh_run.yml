@@ -1,0 +1,19 @@
+---
+- name: Backup show run 
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: show run 
+      ios_command:
+        commands:
+          - show run
+
+      register: print_output
+
+    -  name: show run output
+       debug: 
+         msg: "{{ print_output.stdout_lines }}"
+
+    - name: save output to a file
+      copy: content="{{ print_output.stdout[0] }}" dest="./configuration/backup/{{ inventory_hostname }}.txt"
