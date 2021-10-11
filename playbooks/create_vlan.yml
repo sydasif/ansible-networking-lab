@@ -1,0 +1,15 @@
+---
+- name: Switch specific config
+  hosts: campus
+  gather_facts: false
+  tasks:
+    - name: Create VLANs
+      ios_config:
+        lines:
+          - vlan 10
+          - vlan 20
+
+      register: print_output
+
+    - name: show output
+      debug: msg={{ print_output }}
