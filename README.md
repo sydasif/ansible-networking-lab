@@ -58,3 +58,17 @@ ansible all -m ping
 
 Unlike most Ansible modules, network modules do not run on the managed nodes. Behind the scenes, however, network modules use a different methodology than the other (Linux/Unix and Windows) modules use. Ansible is written and executed in Python. Because the majority of network devices can not run Python, the Ansible network modules are executed on the Ansible control node. Network modules also use the control node as a destination for backup files. Network modules write backup files on the control node, usually in the backup directory under the playbook root directory.
 
+
+### Networking Device Inv/Vars 
+
+```terminal
+[network]
+R1 ansible_host=192.168.52.1 
+S1 ansible_host=192.168.52.2
+
+[network:vars]
+ansible_user=admin
+ansible_password=cisco 
+ansible_network_os=ios 
+ansible_connection=network_cli
+```
