@@ -1,0 +1,13 @@
+---
+- name: Config Username
+  gather_facts: false
+  hosts: all
+  tasks:
+    - name: Add user
+      ios_config:
+        lines:
+         - username bob pri 15 password 123456   
+      register: config
+
+    - debug:
+        var: config
