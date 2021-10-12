@@ -1,0 +1,13 @@
+---
+- name: IOS Command to save running config
+  hosts: network
+  tasks:
+    - name: show run
+      ios_command:
+        commands: show run
+      register: sh_run_output
+
+    - name: save show run into text file
+      copy:
+        content: "{{ sh_run_output }}"
+        dest: "./documentation/network_run_config.txt"
