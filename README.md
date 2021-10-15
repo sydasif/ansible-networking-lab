@@ -2,7 +2,7 @@
 
 1. Ansible is an open-source configuration management and provisioning tool, similar to Chef, Puppet or Salt.
 2. Ansible lets you control and configure nodes from a single machine.
-3. It uses SSH and Paramiko to connect to devices and run the configuration task.
+3. It uses SSH (Paramiko) and API to connect to devices and run the configuration task.
 
 ## Why Ansible?
 
@@ -49,7 +49,14 @@ Unlike most Ansible modules, network modules do not run on the managed nodes. Be
 
 ### Installation
 
-For installation, you can use ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html), its supports various kind of platform.
+Ansible can be installed on most of the Unix systems, with the only dependency of Python 2.7 or Python 3.5. Currently, the Windows operating system is not officially supported as the control machine. For installation, you can use ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html), its supports various kind of platform. We will be installing Ansible on our Ubuntu machine.
+
+```console
+sudo apt update
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt-get install ansible
+```
 
 ### To test your installation
 
@@ -184,10 +191,101 @@ Playbook are Ansible's configuration, deployment and orchestration language. Eac
         msg: "The  {{ ansible_net_hostname }} has {{ ansible_net_iostype }}  platform"
 ```
 
-### Module
+### Ansible networking modules
 
-A module is a reusable, script that Ansible runs on either locally or remotely. A module provides a defined interface, accepts arguments and returns information to Ansible in JSON string to stdout. By default ansible uses command module. For example:-
+A module is a reusable script that Ansible runs on either locally or remotely. A module provides a defined interface, accepts arguments and returns information to Ansible in JSON string to stdout. By default ansible uses command module. For example:-
 
-1. ios command
-2. ios config
-3. ios facts
+1. ios_command
+2. ios_config
+3. ios_facts
+
+```yaml
+---
+- name: IOS Show Commands
+  hosts: R1
+  gather_facts: false
+  tasks:
+    - name: ios show commands
+      ios_command:
+        commands:
+          - show version | i IOS
+          - show run | i hostname
+      register: output
+
+    - name: show output
+      debug:
+        var: output
+```
+
+The result of the show version and show run output:
+
+```JSON
+$ ansible-playbook test.yml
+
+PLAY [IOS Show Commands] *******************************************************************************************************
+
+TASK [ios show commands] *******************************************************************************************************
+ok: [R1]
+
+TASK [show output] *************************************************************************************************************
+ok: [R1] => {
+    "output": {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/bin/python3"
+        },
+        "changed": false,
+        "failed": false,
+        "stdout": [
+            "Cisco IOS Software, 7200 Software (C7200-ADVIPSERVICESK9-M), Version 15.2(4)S5, RELEASE SOFTWARE (fc1)",
+            "hostname R1"
+        ],
+        "stdout_lines": [
+            [
+                "Cisco IOS Software, 7200 Software (C7200-ADVIPSERVICESK9-M), Version 15.2(4)S5, RELEASE SOFTWARE (fc1)"
+            ],
+            [
+                "hostname R1"
+            ]
+        ]
+    }
+}
+
+PLAY RECAP *********************************************************************************************************************
+R1                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+
+```yml
+---
+- name: IOS Show Commands
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: backup
+      ios_config:
+        backup: yes
+      when: inventory_hostname == 'R1'
+```
+
+The output:
+
+```JSON
+$ ansible-playbook test.yml
+
+PLAY [IOS Show Commands] *******************************************************************************************************
+
+TASK [backup] ******************************************************************************************************************
+skipping: [CORE-RTR]
+skipping: [SW1]
+skipping: [CORE01]
+skipping: [CORE02]
+changed: [R1]
+
+PLAY RECAP *********************************************************************************************************************
+CORE-RTR                   : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+CORE01                     : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+CORE02                     : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+R1                         : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+SW1                        : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+```
+
+When the playbook is run, a new backup folder will be created with the configuration backed up for the hosts. The use of the when condition in this example, so that, this task will not be applied to other hosts.
