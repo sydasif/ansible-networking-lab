@@ -1,12 +1,10 @@
-# [Ansible for Network Automation](https://docs.ansible.com/ansible/2.9/network/index.html) 
-
-## What is Ansible
+# What is Ansible
 
 1. Ansible is an open-source configuration management and provisioning tool, similar to Chef, Puppet or Salt.
 2. Ansible lets you control and configure nodes from a single machine.
-3. It uses SSH and Paramiko to connect to network devices and run the configuration task.
+3. It uses SSH and Paramiko to connect to devices and run the configuration task.
 
-**Why Ansible?**
+## Why Ansible?
 
 **Simple:** Ansible uses a simple syntax written in YAML format called playbook.
 
@@ -15,10 +13,6 @@
 **Powerful and Flexible:** Ansible has powerful features that enable you to model even the most complex IT workflow.
 
 **Efficient:** No extra software on your server, means more resources for your applications.
-
-## Getting Started with Ansible for Network Automation
-
-Ansible modules support a wide range of vendors, device types, and actions, so you can manage your entire network with a single automation tool.
 
 ## Ansible component
 
@@ -30,7 +24,13 @@ Ansible modules support a wide range of vendors, device types, and actions, so y
 
 **Playbooks:** Playbooks Contains a list of actions that can be in the playbook by order. The playbook file is written in YAML.
 
-Ansible handles communication between control node and managed nodes through multiple protocols:
+## [Ansible for Network Automation](https://docs.ansible.com/ansible/2.9/network/index.html)
+
+As with other automation tools, Ansible started out by managing servers before expanding its ability to manage networking equipment. For the most part, the modules and what Ansible refers to as the 'playbooks' are similar between server modules and network modules, with differences.
+
+## Getting Started with Ansible for Network Automation
+
+Ansible modules support a wide range of vendors, device types, and actions, so you can manage your entire network with a single automation tool. Ansible handles communication between control node and managed nodes through multiple protocols:
 
 * network_cli by SSH
 * netconf by SSH
@@ -43,20 +43,20 @@ Network platforms supported by ansible are:
 * Juniper: junos
 * VyOS: vyos
 
+### Execution on the Control Node
+
+Unlike most Ansible modules, network modules do not run on the managed nodes. Behind the scenes, however, network modules use a different methodology than the other (Linux/Unix and Windows) modules use. Ansible is written and executed in Python. Because the majority of network devices can not run Python, the Ansible network modules are executed on the Ansible control node. Network modules also use the control node as a destination for backup files. Network modules write backup files on the control node, usually in the backup directory under the playbook root directory.
+
 ### Installation
 
-For installation, you can use ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html) and it supports various kind of platform.
+For installation, you can use ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html), its supports various kind of platform.
 
-#### To test your installation
+### To test your installation
 
 ```console
 ansible --version
 ansible all -m ping
 ```
-
-### Execution on the Control Node
-
-Unlike most Ansible modules, network modules do not run on the managed nodes. Behind the scenes, however, network modules use a different methodology than the other (Linux/Unix and Windows) modules use. Ansible is written and executed in Python. Because the majority of network devices can not run Python, the Ansible network modules are executed on the Ansible control node. Network modules also use the control node as a destination for backup files. Network modules write backup files on the control node, usually in the backup directory under the playbook root directory.
 
 ### Inventory
 
@@ -94,7 +94,9 @@ other2.example.com     ansible_connection=ssh        ansible_user=user
 
 #### Group Variables
 
-If all hosts in a group share a variable value, you can apply that variable to an entire group at once. **Note:** host variable has high priority.
+If all hosts in a group share a variable value, you can apply that variable to an entire group at once. 
+
+**Note:** host variables have high priority.
 
 ```ini
 [atlanta]
@@ -125,8 +127,6 @@ An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate
 6. -e: Network platform
 
 ### YAML Introduction
-
-#### What is YAML
 
 [YMAL](https://yaml.org) is a human-readable structured data format, it's less complex than XML or JSON and it allows you to provide configuration settings.
 
@@ -184,7 +184,7 @@ Playbook are Ansible's configuration, deployment and orchestration language. Eac
         msg: "The  {{ ansible_net_hostname }} has {{ ansible_net_iostype }}  platform"
 ```
 
-## Module
+### Module
 
 A module is a reusable, script that Ansible runs on either locally or remotely. A module provides a defined interface, accepts arguments and returns information to Ansible in JSON string to stdout. By default ansible uses command module. For example:-
 
