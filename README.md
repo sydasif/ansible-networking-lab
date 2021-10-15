@@ -65,7 +65,7 @@ ansible --version
 ansible all -m ping
 ```
 
-### [Inventory](https://github.com/sydasif/ansible_cisco_lab/blob/master/hosts)
+### Inventory
 
 1. Inventory is the target host in our infrastructure which we want to manage by ansible. We put all the hosts information (IP Address/FQDN) into one file called inventory.
 2. The default inventory file is /etc/ansible/hosts.
@@ -73,6 +73,7 @@ ansible all -m ping
 4. The headings in brackets are group names, which are used in classifying hosts.
 5. *network* is a group.
 6. There are two default groups, *all* and *ungrouped*, all contain every host, ungrouped contains all hosts that do not have any other group aside from all.
+**Note**: My [lab host's](https://github.com/sydasif/ansible_cisco_lab/blob/master/hosts) file has a different configuration from the below hosts example, so the playbook output will be not matched with the example inventory file.
 
 ```INI
 [network]
