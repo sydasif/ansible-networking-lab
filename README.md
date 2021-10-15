@@ -1,4 +1,4 @@
-# What is Ansible
+# What is Ansible?
 
 1. Ansible is an open-source configuration management and provisioning tool, similar to Chef, Puppet, and Salt.
 2. Ansible lets you control and configure nodes from a single machine.
@@ -71,20 +71,13 @@ ansible all -m ping
 2. The default inventory file is /etc/ansible/hosts.
 3. Inventory is a file in INI or YAML format.
 4. The headings in brackets are group names, which are used in classifying hosts.
-5. *server* group is a group of groups.
-6. mail.example.com is not included in any group but in a default group.
-7. There are two default groups, *all* and *ungrouped*, all contain every host, ungrouped contains all hosts that do not have any other group aside from all.
+5. *network* is a group.
+6. There are two default groups, *all* and *ungrouped*, all contain every host, ungrouped contains all hosts that do not have any other group aside from all.
 
 ```INI
 [network]
 R1 ansible_host=192.168.52.1 
 S1 ansible_host=192.168.52.2
-
-[network:vars]
-ansible_user=admin
-ansible_password=cisco 
-ansible_network_os=ios 
-ansible_connection=network_cli
 ```
 
 #### Host Variables
@@ -92,29 +85,27 @@ ansible_connection=network_cli
 You can easily assign a variable to a single host.
 
 ```ini
-[targets]
+[network]
+R1 ansible_host=192.168.52.1 ansible_user=bob ansible_password=bob123 
+S1 ansible_host=192.168.52.2 ansible_user=joe ansible_password=joe123 
 
-localhost              ansible_connection=local
-other1.example.com     ansible_connection=ssh        ansible_user=admin
-other2.example.com     ansible_connection=ssh        ansible_user=user
 ```
 
 #### Group Variables
 
-If all hosts in a group share a variable value, you can apply that variable to an entire group at once. 
-
-**Note:** host variables have high priority.
+If all hosts in a group share a variable value, you can apply that variable to an entire group at once.
 
 ```ini
-[atlanta]
-host1 version=17.2
-host2 version=17.1
+[network]
+R1 ansible_host=192.168.52.1 ansible_user=bob ansible_password=bob123 
+S1 ansible_host=192.168.52.2 ansible_user=joe ansible_password=joe123
 
-[atlanta:vars]
-ntp_server=ntp.atlanta.example.com
-proxy=proxy.atlanta.example.com
-version=17.0
+[network:vars]
+ansible_network_os=ios 
+ansible_connection=network_cli
 ```
+
+**Note:** host variables have high priority.
 
 ### Ansible ad-hoc command
 
@@ -199,6 +190,8 @@ A module is a reusable script that Ansible runs on either locally or remotely. A
 2. ios_config
 3. ios_facts
 
+#### **ios-command.yml**
+
 ```yaml
 ---
 - name: IOS Show Commands
@@ -254,6 +247,8 @@ PLAY RECAP *********************************************************************
 R1                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
 
+#### **ios-config.yml**
+
 ```yml
 ---
 - name: IOS Show Commands
@@ -266,7 +261,7 @@ R1                         : ok=2    changed=0    unreachable=0    failed=0    s
       when: inventory_hostname == 'R1'
 ```
 
-The output:
+The output from above ios-config.yml playbook:
 
 ```JSON
 $ ansible-playbook test.yml
