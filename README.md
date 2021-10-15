@@ -1,6 +1,6 @@
 # What is Ansible
 
-1. Ansible is an open-source configuration management and provisioning tool, similar to Chef, Puppet or Salt.
+1. Ansible is an open-source configuration management and provisioning tool, similar to Chef, Puppet, and Salt.
 2. Ansible lets you control and configure nodes from a single machine.
 3. It uses SSH (Paramiko) and API to connect to devices and run the configuration task.
 
@@ -8,7 +8,7 @@
 
 **Simple:** Ansible uses a simple syntax written in YAML format called playbook.
 
-**Agent less:** There are no agent/software or additional firewall ports that you need to install on the client's systems or hosts which you want to automate.
+**Agentless:** There are no agent/software or additional firewall ports that you need to install on the client's systems or hosts which you want to automate.
 
 **Powerful and Flexible:** Ansible has powerful features that enable you to model even the most complex IT workflow.
 
@@ -22,11 +22,11 @@
 
 **Tasks:** Tasks are actions that running by ansible.
 
-**Playbooks:** Playbooks Contains a list of actions that can be in the playbook by order. The playbook file is written in YAML.
+**Playbooks:** Playbooks Contains a list of actions that can be in the playbook.
 
 ## [Ansible for Network Automation](https://docs.ansible.com/ansible/2.9/network/index.html)
 
-As with other automation tools, Ansible started out by managing servers before expanding its ability to manage networking equipment. For the most part, the modules and what Ansible refers to as the 'playbooks' are similar between server modules and network modules, with differences.
+As with other automation tools, Ansible started out by managing servers before expanding its ability to manage networking equipment. For the most part, the modules and what Ansible refers to as the 'playbooks' are similar between server modules and network modules, with some differences.
 
 ## Getting Started with Ansible for Network Automation
 
@@ -49,7 +49,7 @@ Unlike most Ansible modules, network modules do not run on the managed nodes. Be
 
 ### Installation
 
-Ansible can be installed on most of the Unix systems, with the only dependency of Python 2.7 or Python 3.5. Currently, the Windows operating system is not officially supported as the control machine. For installation, you can use ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html), its supports various kind of platform. We will be installing Ansible on our Ubuntu machine.
+Ansible can be installed on most Unix systems, with the only dependency of Python 2.7 or Python 3.5. Currently, the Windows operating system is not officially supported as the control machine. For installation, you can use ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html), its supports various kinds of platforms. We will be installing Ansible on our Ubuntu machine.
 
 ```console
 sudo apt update
@@ -65,15 +65,15 @@ ansible --version
 ansible all -m ping
 ```
 
-### Inventory
+### [Inventory](https://github.com/sydasif/ansible_cisco_lab/blob/master/hosts)
 
-1. Inventory is the target host in our infrastructure which we want to managed by ansible. We put all the hosts information (IP Address/FQDN) into one file called inventory.
+1. Inventory is the target host in our infrastructure which we want to manage by ansible. We put all the hosts information (IP Address/FQDN) into one file called inventory.
 2. The default inventory file is /etc/ansible/hosts.
 3. Inventory is a file in INI or YAML format.
 4. The headings in brackets are group names, which are used in classifying hosts.
-5. *server* group is group of group.
-6. mail.example.com is not include in any group, but in a default group.
-7. There are two default groups, *all* and *ungrouped*, all contains every host, ungrouped contains all hosts that do not have any other group aside from all.
+5. *server* group is a group of groups.
+6. mail.example.com is not included in any group but in a default group.
+7. There are two default groups, *all* and *ungrouped*, all contain every host, ungrouped contains all hosts that do not have any other group aside from all.
 
 ```INI
 [network]
@@ -118,7 +118,7 @@ version=17.0
 
 ### Ansible ad-hoc command
 
-An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate a single task on one or more managed nods.
+An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate a single task on one or more managed nodes.
 
 > ansible -i hosts all -m ping
 >
@@ -141,7 +141,7 @@ An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate
 
 1. YAML files should end in .yaml or .yml
 2. YAML is case sensitive
-3. YAML does not allow the use of tabs, spaces are used instead of tab.
+3. YAML does not allow the use of tabs, spaces are used instead of tabs.
 
 #### YAML Basic Data Types
 
@@ -152,7 +152,7 @@ max_retry: 100
 database: users
 ```
 
-**mapping** is key, value pair dictionary.
+**mapping** is a key, value pair dictionary.
 
 ```YAML
 animals:
@@ -160,7 +160,7 @@ animals:
   age: 5
 ```
 
-**sequence** is list.
+**sequence** is a list.
 
 ```YAML
 employee:
@@ -172,7 +172,7 @@ employee:
 
 ### Ansible Playbook
 
-Playbook are Ansible's configuration, deployment and orchestration language. Each playbook  is composed of one or more *plays* in a list. One *play* is a collection of one or more *task*, a *task* is a single action that you want to execute through Ansible.
+A playbook is Ansible's configuration, deployment, and orchestration language. Each playbook is composed of one or more *plays* in a list. One *play* is a collection of one or more * tasks*, a *task* is a single action that you want to execute through Ansible.
 
 ```yaml
 ---
@@ -193,7 +193,7 @@ Playbook are Ansible's configuration, deployment and orchestration language. Eac
 
 ### Ansible networking modules
 
-A module is a reusable script that Ansible runs on either locally or remotely. A module provides a defined interface, accepts arguments and returns information to Ansible in JSON string to stdout. By default ansible uses command module. For example:-
+A module is a reusable script that Ansible runs on either locally or remotely. A module provides a defined interface, accepts arguments and returns information to Ansible in JSON string to stdout. By default, Ansible uses a command module. Ansible network modules example:-
 
 1. ios_command
 2. ios_config
