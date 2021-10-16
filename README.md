@@ -192,7 +192,9 @@ A module is a reusable script that Ansible runs on either locally or remotely. A
 2. ios_config
 3. ios_facts
 
-#### **ios-command.yml**
+#### ios_command
+
+##### **ios-command.yml**
 
 ```yaml
 ---
@@ -249,7 +251,23 @@ PLAY RECAP *********************************************************************
 R1                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
 
-#### **ios-config.yml**
+### Ansible conditionals
+
+Ansible conditionals are similar to conditional statements in programming languages. In Python, we uses conditional statements to execute only a section of the code by using if , then , or while statements. In Ansible, it uses conditional keywords to only run a task when a given condition is met. Ansible networking
+command modules. Some of the conditions are as follows:
+
+* Equal to (eq)
+* Not equal to (neq)
+* Greater than (gt)
+* Greater than or equal to (ge)
+* Less than (lt)
+* Less than or equal to (le)
+
+#### The when clause
+
+The when clause is useful when you need to check the output of a variable or a play execution result and act accordingly
+
+##### **ios-config.yml**
 
 ```yml
 ---
@@ -286,3 +304,11 @@ SW1                        : ok=0    changed=0    unreachable=0    failed=0    s
 ```
 
 When the playbook is run, a new backup folder will be created with the configuration backed up for the hosts. The use of the when condition in this example, so that, this task will not be applied to other hosts.
+
+### Ansible loops
+
+Ansible provides a number of loops in the playbook.
+
+#### Standard loops
+
+Standard loops in playbooks are often used to easily perform similar tasks multiple times.
