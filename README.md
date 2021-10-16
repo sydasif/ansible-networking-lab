@@ -165,7 +165,7 @@ employee:
 
 ### Ansible Playbook
 
-A playbook is Ansible's configuration, deployment, and orchestration language. Each playbook is composed of one or more *plays* in a list. One *play* is a collection of one or more * tasks*, a *task* is a single action that you want to execute through Ansible.
+A playbook is Ansible's configuration, deployment, and orchestration language. Each playbook is composed of one or more *plays* in a list. One *play* is a collection of one or more *tasks*, a *task* is a single action that you want to execute through Ansible.
 
 ```yaml
 ---
