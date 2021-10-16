@@ -1,0 +1,19 @@
+---
+- name: "Playbook: Configure Vlans" 
+  gather_facts: false
+  hosts: switch
+  tasks:
+
+    - name: configure vlan
+      ios_config:
+        lines:
+          - vlan "{{ item }}"
+
+      register: commands
+        
+      with_items:
+        - '10'
+        - '20'
+
+    -  debug: 
+        var: commands
