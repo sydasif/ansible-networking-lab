@@ -1,5 +1,5 @@
 ---
-- name: "Playbook: Configure username" 
+- name: "Playbook: Configure interfaces" 
   gather_facts: false
   hosts: switch
   tasks:
