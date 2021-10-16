@@ -9,12 +9,13 @@
         name: "{{ item }}"
         speed: '100'
         duplex: full
+
+      register: commands
+        
       with_items:
 
         - 'GigabitEthernet0/0'
         - 'GigabitEthernet0/1'
-
-      register: commands
 
     -  debug: 
         var: commands
