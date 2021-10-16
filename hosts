@@ -20,6 +20,6 @@ core
 mgm
 
 [network:children]
+dist
+acc
 core
-switch
-distribution
