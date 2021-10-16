@@ -1,20 +1,20 @@
 ---
 - name: "Playbook: Configure username" 
   gather_facts: false
-  hosts: all
+  hosts: switch
   tasks:
 
-    - name: Interface settings
-      ios_config:
-        lines: 
-          - username {{ item }} pass admin
-          - username {{ item }} pri 2
-
+    - name: configure interface
+      ios_interface:
+        name: "{{ item }}"
+        speed: '100'
+        duplex: full
       with_items:
 
-        - 'bob'
-        - 'joe'
+        - 'GigabitEthernet0/0'
+        - 'GigabitEthernet0/1'
 
-      register: output
+      register: commands
 
-    -  debug: var=output
+    -  debug: 
+        var: commands
