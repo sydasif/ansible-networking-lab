@@ -1,19 +1,23 @@
-[rtr]
-R1 ansible_host=9.9.9.2
-
-[distribution]
+[dist]
 CORE01 ansible_host=10.1.1.1
 CORE02 ansible_host=10.1.1.2
+
+[acc]
+SW1 ansible_host=10.1.1.3
 
 [core]
 CORE-RTR ansible_host=10.1.1.4
 
-[switch]
-SW1 ansible_host=10.1.1.3
+[mgm]
+R1 ansible_host=9.9.9.2
 
-[campus:children]
-switch
-distribution
+[switch:children]
+acc
+dist
+
+[router:children]
+core
+mgm
 
 [network:children]
 core
