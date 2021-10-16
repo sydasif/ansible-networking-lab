@@ -1,0 +1,17 @@
+# when clause
+---
+- name: IOS Command Output
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+  tasks:
+    - name: show hostname
+      ios_command:
+        commands:
+          - show run | i hostname
+      register: output
+      
+    - name: show output with when conditions
+      when: '"R1" in "{{ output.stdout }}"'
+      debug:
+        msg: "{{ output }}"

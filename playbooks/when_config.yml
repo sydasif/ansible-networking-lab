@@ -1,0 +1,13 @@
+---
+- name: IOS Command Output
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+  tasks:
+
+    - name: config example with when clause
+      when: 
+        - inventory_hostname == 'R1'
+      ios_config:
+        lines:
+          - logging buffered 50000    
