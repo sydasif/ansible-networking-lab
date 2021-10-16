@@ -1,0 +1,22 @@
+---
+- name: "Playbook: Configure Vlans" 
+  gather_facts: false
+  hosts: switch
+  tasks:
+      
+    - name: vlan settings
+      ios_config:
+        parents: vlan {{ item.vlan }}
+        lines:
+
+          - vlan {{ item.vlan }}
+          - name {{ item.name }}
+
+      with_items:
+
+        - { vlan : 10, name: LAN-10 }
+        - { vlan : 20, name: LAN-20 }
+
+      register: print_output
+
+    -  debug: var=print_output     
