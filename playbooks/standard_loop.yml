@@ -1,0 +1,20 @@
+---
+- name: "Playbook: Configure username" 
+  gather_facts: false
+  hosts: all
+  tasks:
+
+    - name: Interface settings
+      ios_config:
+        lines: 
+          - username {{ item }} pass admin
+          - username {{ item }} pri 2
+
+      with_items:
+
+        - 'bob'
+        - 'joe'
+
+      register: output
+
+    -  debug: var=output
