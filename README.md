@@ -312,3 +312,29 @@ Ansible provides a number of loops in the playbook.
 #### Standard loops
 
 Standard loops in playbooks are often used to easily perform similar tasks multiple times.
+
+```yml
+---
+- name: "Playbook: Configure Vlans" 
+  gather_facts: false
+  hosts: switch
+  tasks:
+
+    - name: configure vlan
+      ios_config:
+        lines:
+          - vlan "{{ item }}"
+
+      register: commands
+        
+      with_items:
+        - '10'
+        - '20'
+
+    -  debug: 
+        var: commands
+```
+
+#### Looping over dictionaries
+
+Looping over a simple list is good. However, we often more than one attribute associated with it. If you check above the vlan example, each vlan would have several unique attributes, such as description, vlan gateway IP address, and possibly others. we can use a dictionary to represent these multiple attributes to it.
