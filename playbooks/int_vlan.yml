@@ -1,0 +1,56 @@
+---
+- name: Add Vlans and Inter-vlan Routing
+  hosts: dist 
+  gather_facts: false
+  vars:
+    vlans: {
+      "10": {"description": "LAN_10", "ip": "192.168.10.1 255.255.255.0"},
+      "20": {"description": "LAN_20", "ip": "192.168.20.2 255.255.255.0"}
+    }
+
+  tasks:
+
+    - name: add vlans to 'Dist01'
+      ios_config:
+        lines:
+          - vlan {{ item.key }}
+      with_dict: "{{ vlans }}"
+      when: inventory_hostname == 'Dist01'
+  
+    - name: configure 'Dist01' vlans
+      ios_config:
+        lines:
+          - description {{ item.value.description }}
+          - ip address {{ item.value.ip }}
+        parents: interface vlan {{ item.key }}
+      with_dict: "{{ vlans }}"
+      when: inventory_hostname == 'Dist01'
+
+- name: Add Multiple Vlans and Inter-vlan Routing
+  hosts: dist  
+  gather_facts: false
+  vars:
+    vlans: {
+
+      "10": {"description": "LAN_10", "ip": "192.168.10.2 255.255.255.0"},
+      "20": {"description": "LAN_20", "ip": "192.168.20.1 255.255.255.0"}
+      
+    }
+
+  tasks:
+
+    - name: add vlans to 'Dist02'
+      ios_config:
+        lines:
+          - vlan {{ item.key }}
+      with_dict: "{{ vlans }}"
+      when: inventory_hostname == 'Dist02'
+  
+    - name: configure 'Dist02' vlans
+      ios_config:
+        lines:
+          - description {{ item.value.description }}
+          - ip address {{ item.value.ip }}
+        parents: interface vlan {{ item.key }}
+      with_dict: "{{ vlans }}"
+      when: inventory_hostname == 'Dist02'
