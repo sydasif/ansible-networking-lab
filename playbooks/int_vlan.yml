@@ -22,6 +22,7 @@
         lines:
           - description {{ item.value.description }}
           - ip address {{ item.value.ip }}
+          - no shutdown
         parents: interface vlan {{ item.key }}
       with_dict: "{{ vlans }}"
       when: inventory_hostname == 'Dist01'
@@ -51,6 +52,7 @@
         lines:
           - description {{ item.value.description }}
           - ip address {{ item.value.ip }}
+          - no shutdown
         parents: interface vlan {{ item.key }}
       with_dict: "{{ vlans }}"
       when: inventory_hostname == 'Dist02'
