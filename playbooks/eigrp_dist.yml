@@ -1,0 +1,21 @@
+---
+- name: configure eigrp
+  hosts: dist 
+  gather_facts: false
+
+  tasks:
+    - name: enable eigrp
+      ios_config:
+        parents: router eigrp 100
+        lines:
+          - network 192.168.10.0 0.0.0.255
+          - network 192.168.20.0 0.0.0.255
+          - no auto-summary
+
+    - name: show ip route
+      ios_command:
+        commands: show ip route 
+      register: output      
+
+    -  debug:
+        var: output.stdout_lines 
