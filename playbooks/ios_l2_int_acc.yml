@@ -1,0 +1,42 @@
+# distribution
+---
+- name: "P1: Configure vlan on interface" 
+  gather_facts: false
+  hosts: SW01
+  tasks:
+
+    - name: Merge provided configuration with device configuration
+      ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/0
+            access:
+              vlan: 10
+          - name: GigabitEthernet0/1
+            access:
+              vlan: 10
+        state: merged
+      register: commands
+
+    - debug:
+        var: commands                    
+
+- name: "P2: Configure vlan on interface" 
+  gather_facts: false
+  hosts: SW02
+  tasks:
+
+    - name: Merge provided configuration with device configuration
+      ios_l2_interfaces:
+        config:
+          - name: GigabitEthernet0/0
+            access:
+              vlan: 20
+          - name: GigabitEthernet0/1
+            access:
+              vlan: 20    
+        state: merged
+      register: commands
+
+    - debug:
+        var: commands
+                             
