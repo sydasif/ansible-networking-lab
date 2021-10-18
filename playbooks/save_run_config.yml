@@ -1,0 +1,16 @@
+---
+- name: "P1: Copy running config to startup config" 
+  gather_facts: false
+  hosts: switch
+  tasks:
+
+    - name: copy running-config startup-config
+      ios_command:
+        commands:
+          - command: copy running-config startup-config
+            prompt: '[confirm]'
+            answer: "\r"
+      register: output
+      
+    - debug:
+        var: output.stdout_lines  
