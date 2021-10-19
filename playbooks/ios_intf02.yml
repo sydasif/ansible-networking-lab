@@ -1,0 +1,16 @@
+---
+- name: "PLAY 1: Configure All Switches"
+  hosts: switch 
+  tasks:
+    - name: "Configure Interfaces"
+      ios_interface:
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        duplex: "{{ intf_duplex }}"
+        mtu: "{{ intf_mtu }}"
+        state: up
+      loop: "{{ interfaces[inventory_hostname] }}"
+      register: ios_intf
+
+    - debug:
+        var: ios_intf  
