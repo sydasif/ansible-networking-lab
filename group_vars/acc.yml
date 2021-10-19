@@ -1,0 +1,20 @@
+---
+interfaces:
+  SW01:
+    - name: GigabitEthernet0/1
+      description: link-to-dist01
+      mode: access
+      vlan: 10
+    - name: GigabitEthernet0/1
+      description: link-to-dist02
+      mode: access
+      vlan: 10
+  SW02:
+    - name: GigabitEthernet0/0
+      description: link-to-dist02
+      mode: access
+      vlan: 20
+    - name: GigabitEthernet0/1
+      description: link-to-dist01
+      mode: access
+      vlan: 20      

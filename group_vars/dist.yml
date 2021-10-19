@@ -1,6 +1,24 @@
 ---
 
-ansible_user: admin
-ansible_password: cisco
-ansible_network_os: ios
-ansible_connection: network_cli
+interfaces:
+  Dist01:
+    - name: GigabitEthernet0/1
+      description: link-to-sw01
+      mode: access
+      vlan: 10
+    - name: GigabitEthernet0/2
+      description: link-to-sw02
+      mode: access
+      vlan: 20
+
+  Dist02:
+    - name: GigabitEthernet0/0
+      description: link-to-sw01
+      mode: access
+      vlan: 10
+    - name: GigabitEthernet0/2
+      description: link-to-sw02
+      mode: access
+      vlan: 20      
+      
+
