@@ -14,6 +14,8 @@
 
 **Efficient:** No extra software on your server, means more resources for your applications.
 
+**Idempotent:** Ansible will not change the state of the device unless it needs to in order to change its setting to reach the desired state.
+
 ## Ansible component
 
 **Control node:** A central management of ansible and ansible code run on it and gather information about the managed node.
