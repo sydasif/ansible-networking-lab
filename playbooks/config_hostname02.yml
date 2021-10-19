@@ -1,0 +1,15 @@
+---
+- name: "PLAY 1: Configure All Dist Switches"
+  hosts: dist
+  tasks:
+    - name: "Configure Hostname and Domain Name"
+      ios_system:
+        hostname: "{{ hostname }}"
+        domain_name: "{{ domain_name }}"
+        lookup_enabled: no
+        name_servers: "{{ name_servers }}"
+    - name: "Configure NTP"
+      ios_ntp:
+        server: "{{ ntp_server }}"
+        logging: true
+        state: present
