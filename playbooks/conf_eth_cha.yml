@@ -1,0 +1,30 @@
+---
+- name: Config Etherchannel
+  hosts: distribution
+  gather_facts: false
+  tasks:
+
+    - name: config dist01 etherchannel
+      ios_config:
+        lines:
+          - "interface range gigabitEthernet 1/0 - 1"
+          - no negotiation auto
+          - switchport trunk encapsulation dot1q 
+          - switchport mode trunk
+          - no shut  
+          - "channel-group 1 mode desirable"  
+      when: 
+        - inventory_hostname == 'Dist01'
+    
+    - name: config dist02 etherchannel
+      ios_config:
+        lines:
+          - "interface range gigabitEthernet 1/0 - 1"
+          - no negotiation auto
+          - switchport trunk encapsulation dot1q 
+          - switchport mode trunk
+          - no shut  
+          - "channel-group 1 mode auto"  
+      when: 
+        - inventory_hostname == 'Dist02'
+
