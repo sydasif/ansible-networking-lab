@@ -1,19 +1,19 @@
-[dist]
+[distribution]
 Dist01 ansible_host=10.1.1.1
 Dist02 ansible_host=10.1.1.2
 
-[acc]
+[access]
 SW01 ansible_host=10.1.1.3
 SW02 ansible_host=10.1.1.4
 
 [core]
-CORE ansible_host=10.1.1.5
+Core ansible_host=10.1.1.5
 
 [switch:children]
-acc
-dist
+access
+distribution
 
-[campus:children]
-dist
-acc
+[network:children]
+distribution
+access
 core
