@@ -1,1 +1,3 @@
 ansible --list-hosts all
+ansible-config view
+ansible-config dump --only-changed
