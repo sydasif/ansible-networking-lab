@@ -8,8 +8,18 @@
         domain_name: "{{ domain_name }}"
         lookup_enabled: no
         name_servers: "{{ name_servers }}"
+      register: commands
+    
+    - debug: 
+        var: commands
+    
     - name: "Configure NTP"
       ios_ntp:
         server: "{{ ntp_server }}"
         logging: true
         state: present
+      register: commands
+
+    - debug: 
+        var: commands
+
