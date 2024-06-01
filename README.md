@@ -2,24 +2,26 @@
 
 Ansible is a powerful open-source configuration management and provisioning tool that stands alongside industry favorites like Chef, Puppet, and Salt. Designed to streamline the process of managing and configuring nodes, Ansible enables administrators to control multiple devices from a single, centralized machine. Leveraging SSH (Paramiko) and various APIs for connectivity, Ansible simplifies the execution of configuration tasks, making it an essential tool for efficient and effective infrastructure management.
 
-## Why Ansible?
+## Why Use Ansible?
 
 In today's fast-paced IT environments, efficient and reliable configuration management tools are essential for maintaining smooth operations. Ansible stands out as a preferred choice for many organizations due to its simplicity, power, and flexibility. Here are some key reasons why Ansible is a valuable tool for managing your infrastructure:
 
 1. **Simple:** Ansible uses a straightforward syntax written in YAML format, known as playbooks, making it easy to learn and use.
 2. **Agentless:** There is no need to install any agents or additional software on the client systems or hosts you wish to automate, simplifying the setup and reducing security concerns.
-3. **Powerful and Flexible:** Ansible boasts powerful features that allow you to model and manage even the most complex IT workflows with ease
+3. **Powerful and Flexible:** Ansible boasts powerful features that allow you to model and manage even the most complex IT workflows with ease.
 4. **Efficient:** By not requiring extra software on your servers, Ansible ensures that more resources are available for your applications, enhancing overall system performance.
 5. **Idempotent:** Ansible ensures that changes are only made when necessary to achieve the desired state, preventing unnecessary modifications and maintaining consistency across your infrastructure.
 
-## Ansible Components
+## Ansible Basic Components
 
 Understanding the key components of Ansible is essential for effectively utilizing its capabilities. Here’s a breakdown of the fundamental elements that make up Ansible:
 
-1. **Control Node:** The control node is the central management point where Ansible and its code are executed. It is responsible for running tasks and gathering information about the managed nodes.
+1. **Control Node:** The central management point where Ansible and its code are executed. It is responsible for running tasks and gathering information about the managed nodes.
 2. **Managed Nodes:** These are the network devices and systems managed by the control node. Ansible connects to these nodes to perform configuration and management tasks.
-3. **Tasks:** Tasks are the individual actions executed by Ansible. Each task performs a specific function, such as installing a package, restarting a service, or managing files.
-4. **Playbooks:** Playbooks are YAML files that contain a list of tasks. They define the desired state of the managed nodes and outline the sequence of actions to achieve that state, allowing for complex workflows and automation scenarios.
+3. **Tasks:** The individual actions executed by Ansible. Each task performs a specific function, such as installing a package, restarting a service, or managing files.
+4. **Playbooks:** YAML files that contain a list of tasks. They define the desired state of the managed nodes and outline the sequence of actions to achieve that state, allowing for complex workflows and automation scenarios.
+5. [**Inventory**](https://docs.ansible.com/ansible/2.9/user_guide/intro_inventory.html#how-to-build-your-inventory): A list of managed nodes. An inventory file is also sometimes called a “hostfile”. Your inventory can specify information like the IP address for each managed node. An inventory can also organize managed nodes, creating and nesting groups for easier scaling.
+6. **Modules:** Units of code Ansible executes. Each module has a particular use, from administering users on a specific type of database to managing VLAN interfaces on a specific type of network device. You can invoke a single module with a task or invoke several different modules in a playbook. For an idea of how many modules Ansible includes, take a look at the [list of all modules](https://docs.ansible.com/ansible/2.9/modules/modules_by_category.html#module-index).
 
 By understanding these components, you can effectively leverage Ansible to automate and streamline your IT operations, ensuring a more efficient and consistent infrastructure management process.
 
@@ -44,7 +46,7 @@ Network platforms supported by Ansible are:
 
 With Ansible's extensive support for different network platforms and protocols, you can streamline your network automation processes and achieve greater operational efficiency.
 
-### Execution of Network Modules in Ansible
+### [Execution of Network Modules in Ansible](https://docs.ansible.com/ansible/2.9/network/getting_started/network_differences.html#how-network-automation-is-different)
 
 Unlike most Ansible modules, network modules do not run on the managed nodes due to the inability of most network devices to run Python. Instead, these modules are executed on the Ansible control node. This different methodology ensures that Ansible can still manage network devices effectively. Additionally, network modules use the control node as a destination for backup files, typically storing them in the backup directory under the playbook root directory. This approach allows Ansible to provide consistent network management and backup capabilities without the need for Python on the network devices themselves.
 
@@ -61,29 +63,132 @@ sudo apt install ansible
 
 These steps ensure that your Ubuntu system is updated, necessary software properties are installed, the Ansible repository is added, and Ansible itself is installed, allowing you to start using Ansible for automation tasks.
 
-To ensure that your Ansible installation is successful, you can run the following command in your terminal:
+To ensure that your Ansible installation is successful and operational, you can run the following commands in your terminal:
 
 ```bash
-ansible --version
+zolo@u22s:~$ ansible --version
+ansible [core 2.16.7]
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/zolo/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  ansible collection location = /home/zolo/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/bin/ansible
+  python version = 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0] (/usr/bin/python3)
+  jinja version = 3.0.3
+  libyaml = True
 ```
 
 Executing this command will display information about the installed version of Ansible, confirming that it is correctly installed and ready for use.
 
+Additionally, you can test Ansible's connectivity and functionality by running a simple ping command against the localhost:
+
+```shell
+zolo@u22s:~$ ansible localhost -m ping
+localhost | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+Running this command should result in a successful ping response from the localhost, indicating that Ansible can communicate with the target host and execute commands successfully.
+
+### Privilege Escalation and Network Device
+
+As of Ansible 2.6, you can use the top-level Ansible parameter `become: yes` with `become_method: enable` to run a task, play, or playbook with escalated privileges on any network platform that supports privilege escalation.
+
+### Establish a Manual Connection to a Managed Node
+
+To confirm your credentials, connect to a network device manually and retrieve its configuration. Replace the sample user and device name with your real credentials. For example, for a router:
+
+```bash
+zolo@u22s:~$ ssh admin@172.16.10.11
+(admin@172.16.10.11) Password: 
+
+r1#sh ip int bri
+Interface                  IP-Address      OK? Method Status                Protocol
+FastEthernet0/0            172.16.10.11    YES NVRAM  up                    up      
+FastEthernet0/1            unassigned      YES NVRAM  administratively down down    
+FastEthernet1/0            unassigned      YES unset  administratively down down    
+r1#exit
+Connection to 172.16.10.11 closed.
+```
+
+### Run Your First Command and Playbook
+
+Instead of manually connecting and running a command on the network device, you can retrieve its configuration with a single, stripped-down Ansible command
+
+:
+
+```bash
+zolo@u22s:~$ ansible all -i 172.16.10.12, -c network_cli -u admin -k -m ios_facts -e ansible_network_os=ios
+SSH password: 
+172.16.10.12 | SUCCESS => {
+    "ansible_facts": {
+        "ansible_net_api": "cliconf",
+        "ansible_net_gather_network_resources": [],
+        "ansible_net_gather_subset": [
+            "default"
+        ],
+        "ansible_net_hostname": "core-sw",
+        "ansible_net_image": "tftp://255.255.255.255/unknown",
+        "ansible_net_iostype": "IOS",
+        "ansible_net_model": "3725",
+        "ansible_net_operatingmode": "autonomous",
+        "ansible_net_python_version": "3.10.12",
+        "ansible_net_serialnum": "FTX0945W0MY",
+        "ansible_net_system": "ios",
+        "ansible_net_version": "12.4(15)T14",
+        "ansible_network_resources": {}
+    },
+    "changed": false
+}
+```
+
+In this example, Ansible targets all hosts defined in the inventory, specifying a custom inventory file with `-i`, connecting using `network_cli` as the connection type with `-c`, authenticating with the username `admin` using `-u`, prompting for a password with `-k`, executing the `ios_facts` module to gather facts about IOS devices, and specifying the network platform as `ios` using `-e`.
+
+### Key Parameters
+
+* `-i`: Specifies the list of managed nodes, separated by commas.
+* `-c`: Defines the connection type.
+* `-u`: Specifies the username for authentication.
+* `-k`: Prompts for a password.
+* `-m`: Specifies the module name.
+* `-e`: Defines additional variables, such as the network platform.
+
+These ad-hoc commands provide quick and efficient ways to perform specific tasks across your infrastructure using Ansible's versatile command-line interface.
+
+Ansible is a robust and flexible tool for automating IT infrastructure management. Expanding into network automation, Ansible supports a wide range of network devices and protocols, ensuring comprehensive management capabilities. The installation process is straightforward, and Ansible's ability to handle privilege escalation and network-specific tasks further enhances its utility.
+
 ### Inventory
 
-1. Inventory is the target host in our infrastructure which we want to manage by ansible. We put all the hosts information (IP Address/FQDN) into one file called inventory.
-2. The default inventory file is /etc/ansible/hosts.
-3. Inventory is a file in INI or YAML format.
-4. The headings in brackets are group names, which are used in classifying hosts.
-5. *network* is a group.
-6. There are two default groups, *all* and *ungrouped*, all contain every host, ungrouped contains all hosts that do not have any other group aside from all.
+Inventory serves as the foundation for managing hosts within our infrastructure using Ansible. It consolidates information about target hosts, including their IP addresses or Fully Qualified Domain Names (FQDNs), into a single file called the inventory.
 
-**Note**: My [lab host's](https://github.com/sydasif/ansible_cisco_lab/blob/master/hosts) file has a different configuration from the below hosts example, so the playbook output will be not matched with the example inventory file.
+Key points about inventory include:
 
-```INI
-[network]
-R1 ansible_host=192.168.52.1 
-S1 ansible_host=192.168.52.2
+1. **Host Information:** Inventory contains details about the hosts we want to manage with Ansible, facilitating easy access and organization of target systems.
+2. **Default Location:** The default location for the inventory file is `/etc/ansible/hosts`, though you can specify a different location as needed.
+3. **File Format:** Inventory can be written in either INI or YAML format, providing flexibility in structuring and organizing host information.
+4. **Grouping Hosts:** Group names, enclosed in brackets, serve to classify hosts based on common attributes or roles they fulfill within the infrastructure.
+5. **Special Groups:** The `network` group is an example of a special group used for categorizing network devices, enabling targeted management of specific device types.
+6. **Default Groups:** Ansible includes two default groups, namely `all` and `ungrouped`. The `all` group encompasses every host defined in the inventory, while the `ungrouped` group comprises hosts that do not belong to any other group aside from `all`.
+
+By leveraging the inventory, Ansible users can effectively organize, manage, and automate tasks across their infrastructure, streamlining operations and enhancing efficiency.
+
+```ini
+[router]
+r1 ansible_host=172.16.10.11
+
+[core]
+core-sw ansible_host=172.16.10.12
+
+[switch]
+access1 ansible_host=172.16.10.13
+access2 ansible_host=172.16.10.14
+
+[campus:children]
+router
+core
+switch
 ```
 
 #### Host Variables
@@ -91,10 +196,11 @@ S1 ansible_host=192.168.52.2
 You can easily assign a variable to a single host.
 
 ```ini
-[network]
-R1 ansible_host=192.168.52.1 ansible_user=bob ansible_password=bob123 
-S1 ansible_host=192.168.52.2 ansible_user=joe ansible_password=joe123 
+[router]
+r1 ansible_host=172.16.10.11 ansible_user=bob ansible_password=bob123 
 
+[core]
+core-sw ansible_host=172.16.10.12 ansible_user=joe ansible_password=joe123 
 ```
 
 #### Group Variables
@@ -102,33 +208,18 @@ S1 ansible_host=192.168.52.2 ansible_user=joe ansible_password=joe123
 If all hosts in a group share a variable value, you can apply that variable to an entire group at once.
 
 ```ini
-[network]
-R1 ansible_host=192.168.52.1 ansible_user=bob ansible_password=bob123 
-S1 ansible_host=192.168.52.2 ansible_user=joe ansible_password=joe123
+[router]
+r1 ansible_host=172.16.10.11 ansible_user=bob ansible_password=bob123 
 
-[network:vars]
+[core]
+core-sw ansible_host=172.16.10.12 ansible_user=joe ansible_password=joe123
+
+[campus:vars]
 ansible_network_os=ios 
 ansible_connection=network_cli
 ```
 
 **Note:** host variables have high priority.
-
-### Ansible ad-hoc command
-
-An Ansible ad-hoc command uses the usr/bin/ansible command-line tool to automate a single task on one or more managed nodes.
-
-> ansible -i hosts all -m ping
->
-> ansible all -m ios_command -a "command='show ip interface brief'"
->
-> ansible all -i 192.168.52.71, -c network_cli -u admin -k -m ios_facts -e ansible_network_os=ios
-
-1. -i: list of managed nodes which they are separated by comma
-2. -c: Connection type
-3. -u: Username
-4. -k: Ask for a password
-5. -m: Module name
-6. -e: Network platform
 
 ### YAML Introduction
 
