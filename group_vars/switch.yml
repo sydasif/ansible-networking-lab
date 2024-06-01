@@ -1,14 +1,6 @@
 ---
-ansible_user: admin
-ansible_password: cisco
-ansible_network_os: ios
-ansible_connection: network_cli
-
 name_servers:
 - 8.8.8.8
 - 8.8.4.4
-ntp_server: 172.20.1.17
-domain_name: test.com
-
-intf_duplex: full
-intf_mtu: '1500'
+ntp_server: 1.1.1.1
+domain_name: lab.com
