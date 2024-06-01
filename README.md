@@ -61,12 +61,13 @@ sudo apt install ansible
 
 These steps ensure that your Ubuntu system is updated, necessary software properties are installed, the Ansible repository is added, and Ansible itself is installed, allowing you to start using Ansible for automation tasks.
 
-### To test your installation
+To ensure that your Ansible installation is successful, you can run the following command in your terminal:
 
-```console
+```bash
 ansible --version
-ansible all -m ping
 ```
+
+Executing this command will display information about the installed version of Ansible, confirming that it is correctly installed and ready for use.
 
 ### Inventory
 
