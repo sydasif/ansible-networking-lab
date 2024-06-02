@@ -50,7 +50,7 @@ With Ansible's extensive support for different network platforms and protocols, 
 
 Unlike most Ansible modules, network modules do not run on the managed nodes due to the inability of most network devices to run Python. Instead, these modules are executed on the Ansible control node. This different methodology ensures that Ansible can still manage network devices effectively. Additionally, network modules use the control node as a destination for backup files, typically storing them in the backup directory under the playbook root directory. This approach allows Ansible to provide consistent network management and backup capabilities without the need for Python on the network devices themselves.
 
-## Installation on Ansible
+## Installation of Ansible
 
 Ansible can be installed on most Unix systems, with the only dependency being Python 2.7 or Python 3.5. Currently, the Windows operating system is not officially supported as a control machine. For detailed installation instructions, you can refer to the Ansible documentation [**website**](https://docs.ansible.com/ansible/2.9/installation_guide/index.html), which provides guidance for various platforms. In this guide, we will install Ansible on an Ubuntu machine using the following commands:
 
@@ -92,7 +92,7 @@ localhost | SUCCESS => {
 
 Running this command should result in a successful ping response from the localhost, indicating that Ansible can communicate with the target host and execute commands successfully.
 
-### Privilege Escalation and Network Device
+### Privilege Escalation - Networking Device
 
 As of Ansible 2.6, you can use the top-level Ansible parameter `become: yes` with `become_method: enable` to run a task, play, or playbook with escalated privileges on any network platform that supports privilege escalation.
 
@@ -113,7 +113,7 @@ r1#exit
 Connection to 172.16.10.11 closed.
 ```
 
-### Run Your First Command and Playbook
+### Run Your First Command
 
 Instead of manually connecting and running a command on the network device, you can retrieve its configuration with a single, stripped-down Ansible command
 
