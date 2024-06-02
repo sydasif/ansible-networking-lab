@@ -259,7 +259,7 @@ Inventory serves as the foundation for managing hosts within our infrastructure 
 
 #### Formats for Inventory Files
 
-You can create your inventory file in one of many formats, the most common being `INI` and `YAML`. A basic INI `/etc/ansible/hosts` might look like this:
+You can create your inventory file in one of many formats, the most common being `INI` and [`YAML`](/yaml-into.md). A basic INI `/etc/ansible/hosts` might look like this:
 
 ```ini
 [router]
@@ -392,43 +392,6 @@ The command fetches information from our hosts/inventory file and creates severa
 6. **Default Groups:** Ansible includes two default groups, namely `all` and `ungrouped`. The `all` group encompasses every host defined in the inventory, while the `ungrouped` group comprises hosts that do not belong to any other group aside from `all`.
 
 By leveraging the inventory, Ansible users can effectively organize, manage, and automate tasks across their infrastructure, streamlining operations and enhancing efficiency.
-
-### YAML Introduction
-
-[YAML](https://yaml.org) is a human-readable structured data format, it's less complex than XML or JSON and it allows you to provide configuration settings.
-
-#### YAML Basic Rules
-
-1. YAML files should end in .yaml or .yml
-2. YAML is case sensitive
-3. YAML does not allow the use of tabs, spaces are used instead of tabs.
-
-#### YAML Basic Data Types
-
-**scalers** is a single value and a variable, it can be string or integer.
-
-```YAML
-max_retry: 100
-database: users
-```
-
-**mapping** is a key, value pair dictionary.
-
-```YAML
-animals:
-  name: cat
-  age: 5
-```
-
-**sequence** is a list.
-
-```YAML
-employee:
-  - age: 28
-    name: Jack
-  - age: 34
-    name: Syd
-```
 
 ### Ansible Playbook
 
