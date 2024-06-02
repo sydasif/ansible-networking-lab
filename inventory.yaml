@@ -1,0 +1,18 @@
+all:
+  children:
+    campus:
+      children:
+        router:
+          hosts:
+            r1:
+              ansible_host: 172.16.10.11
+        core:
+          hosts:
+            core-sw:
+              ansible_host: 172.16.10.12
+        switch:
+          hosts:
+            access1:
+              ansible_host: 172.16.10.13
+            access2:
+              ansible_host: 172.16.10.14
