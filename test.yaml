@@ -1,0 +1,15 @@
+---
+
+r1: 172.16.10.11
+device_type: "cisco_ios"
+username: admin
+password: cisco
+routing_data:
+  bgp: 65001
+  ospf_neighbors:
+    - 1.1.1.1
+    - 2.2.2.2
+    - 3.3.3.
+switching_data:
+  stp: "rapaid_pvst"
+  root_bridge: false
