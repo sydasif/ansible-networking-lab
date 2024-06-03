@@ -440,178 +440,85 @@ The command fetches information from our hosts/inventory file and creates severa
 
 By leveraging the inventory, Ansible users can effectively organize, manage, and automate tasks across their infrastructure, streamlining operations and enhancing efficiency.
 
-### Ansible Playbook
+### Test Your Ansible Setup - Playbook
 
-A playbook is Ansible's configuration, deployment, and orchestration language. Each playbook is composed of one or more *plays* in a list. One *play* is a collection of one or more *tasks*, a *task* is a single action that you want to execute through Ansible.
+A playbook is Ansible's configuration, deployment, and orchestration language. Each playbook is composed of one or more *plays* in a list. One *play* is a collection of one or more *tasks*, and a *task* is a single action that you want to execute through Ansible. In this section, we'll create a basic playbook to gather facts from an IOS device and display them using Ansible's debug module.
+
+Here's an example playbook:
 
 ```yaml
 ---
-- name: "Playbook-1: Get ios facts" 
-  connection: network_cli
-  gather_facts: false
+- name: "Playbook-1: Get ios facts"
   hosts: all
+  gather_facts: false
+  connection: network_cli
+  
   tasks:
- 
-    - name: "P1T1: Get config from ios_facts" 
+    - name: "P1T1: Get config from ios_facts"
       ios_facts:
         gather_subset: all
- 
+
     - name: "P1T2: Display debug message"
       debug:
-        msg: "The  {{ ansible_net_hostname }} has {{ ansible_net_iostype }}  platform"
+        msg: "The {{ ansible_net_hostname }} has {{ ansible_net_iostype }} platform"
 ```
 
-### Ansible networking modules
+Let's break down the playbook:
 
-A module is a reusable script that Ansible runs on either locally or remotely. A module provides a defined interface, accepts arguments and returns information to Ansible in JSON string to stdout. By default, Ansible uses a command module. Ansible network modules example:-
+1. **Playbook Definition**: The playbook starts with `---` to denote the beginning of a YAML document. Each playbook consists of one or more plays.
 
-1. ios_command
-2. ios_config
-3. ios_facts
+2. **Play Name**: The play is named "Playbook-1: Get ios facts". This is for your reference and helps identify the purpose of the play.
 
-#### ios_command
+3. **Hosts**: The `hosts` directive specifies the target devices for this play. In this case, `all` means it will run on all hosts defined in your inventory.
 
-##### **ios-command.yml**
+4. **Gather Facts**: `gather_facts: false` means that Ansible's default fact-gathering mechanism is disabled. Instead, we'll use the `ios_facts` module to gather facts.
+5. **Connection Type**: `connection: network_cli` indicates that the play will use CLI to connect to network devices.
+6. **Tasks**: Each play consists of a list of tasks. In this play, we have two tasks:
+    * **P1T1: Get config from ios_facts**: This task uses the `ios_facts` module to gather all possible facts from the IOS device. `gather_subset: all` means we are gathering all available facts.
+    * **P1T2: Display debug message**: This task uses the `debug` module to display a custom message that includes the gathered facts. The message is dynamically generated using Jinja2 templating, inserting the device's hostname (`ansible_net_hostname`) and platform type (`ansible_net_iostype`).
 
-```yaml
----
-- name: IOS Show Commands
-  hosts: R1
-  gather_facts: false
-  tasks:
-    - name: ios show commands
-      ios_command:
-        commands:
-          - show version | i IOS
-          - show run | i hostname
-      register: output
+### Running the Playbook
 
-    - name: show output
-      debug:
-        var: output
+To run this playbook, ensure you have your inventory file set up correctly. Execute the playbook with the following command:
+
+```bash
+ansible-playbook playbook.yml
 ```
 
-The result of the show version and show run output:
+```json
+zolo@u22s:~/ansible-networking-lab$ ansible-playbook 01_play.yaml 
 
-```JSON
-$ ansible-playbook test.yml
+PLAY [Playbook-1: Get ios facts] ********************************************************************************************************************
 
-PLAY [IOS Show Commands] *******************************************************************************************************
+TASK [P1T1: Get config from ios_facts] **************************************************************************************************************
+ok: [access1]
+ok: [access2]
+ok: [r1]
+ok: [core-sw]
 
-TASK [ios show commands] *******************************************************************************************************
-ok: [R1]
-
-TASK [show output] *************************************************************************************************************
-ok: [R1] => {
-    "output": {
-        "ansible_facts": {
-            "discovered_interpreter_python": "/usr/bin/python3"
-        },
-        "changed": false,
-        "failed": false,
-        "stdout": [
-            "Cisco IOS Software, 7200 Software (C7200-ADVIPSERVICESK9-M), Version 15.2(4)S5, RELEASE SOFTWARE (fc1)",
-            "hostname R1"
-        ],
-        "stdout_lines": [
-            [
-                "Cisco IOS Software, 7200 Software (C7200-ADVIPSERVICESK9-M), Version 15.2(4)S5, RELEASE SOFTWARE (fc1)"
-            ],
-            [
-                "hostname R1"
-            ]
-        ]
-    }
+TASK [P1T2: Display debug message] ******************************************************************************************************************
+ok: [r1] => {
+    "msg": "The r1 has IOS platform"
+}
+ok: [access1] => {
+    "msg": "The access1 has IOS platform"
+}
+ok: [core-sw] => {
+    "msg": "The core-sw has IOS platform"
+}
+ok: [access2] => {
+    "msg": "The access2 has IOS platform"
 }
 
-PLAY RECAP *********************************************************************************************************************
-R1                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+PLAY RECAP ******************************************************************************************************************************************
+access1                    : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+access2                    : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+core-sw                    : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+r1                         : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-### Ansible conditionals
+This command tells Ansible to run the playbook (`playbook.yml`) using the specified inventory file.
 
-Ansible conditionals are similar to conditional statements in programming languages. In Python, we uses conditional statements to execute only a section of the code by using if , then , or while statements. In Ansible, it uses conditional keywords to only run a task when a given condition is met. Ansible networking
-command modules. Some of the conditions are as follows:
+### Conclusion
 
-* Equal to (eq)
-* Not equal to (neq)
-* Greater than (gt)
-* Greater than or equal to (ge)
-* Less than (lt)
-* Less than or equal to (le)
-
-#### The when clause
-
-The when clause is useful when you need to check the output of a variable or a play execution result and act accordingly
-
-##### **ios-config.yml**
-
-```yml
----
-- name: IOS Show Commands
-  hosts: all
-  gather_facts: false
-  tasks:
-    - name: backup
-      ios_config:
-        backup: yes
-      when: inventory_hostname == 'R1'
-```
-
-The output from above ios-config.yml playbook:
-
-```JSON
-$ ansible-playbook test.yml
-
-PLAY [IOS Show Commands] *******************************************************************************************************
-
-TASK [backup] ******************************************************************************************************************
-skipping: [CORE-RTR]
-skipping: [SW1]
-skipping: [CORE01]
-skipping: [CORE02]
-changed: [R1]
-
-PLAY RECAP *********************************************************************************************************************
-CORE-RTR                   : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-CORE01                     : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-CORE02                     : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-R1                         : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
-SW1                        : ok=0    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
-```
-
-When the playbook is run, a new backup folder will be created with the configuration backed up for the hosts. The use of the when condition in this example, so that, this task will not be applied to other hosts.
-
-### Ansible loops
-
-Ansible provides a number of loops in the playbook.
-
-#### Standard loops
-
-Standard loops in playbooks are often used to easily perform similar tasks multiple times.
-
-```yml
----
-- name: "Playbook: Configure Vlans" 
-  gather_facts: false
-  hosts: switch
-  tasks:
-
-    - name: configure vlan
-      ios_config:
-        lines:
-          - vlan "{{ item }}"
-
-      register: commands
-        
-      with_items:
-        - '10'
-        - '20'
-
-    -  debug: 
-        var: commands
-```
-
-#### Looping over dictionaries
-
-Looping over a simple list is good. However, we often more than one attribute associated with it. If you check above the vlan example, each vlan would have several unique attributes, such as description, vlan gateway IP address, and possibly others. we can use a dictionary to represent these multiple attributes to it.
+Creating and running a simple Ansible playbook is a powerful way to automate tasks on network devices. This basic playbook gathers facts from an IOS device and displays them, providing a foundation you can build on for more complex automation workflows. Whether you're managing a small lab or a large production network, Ansible playbooks can help streamline your operations and reduce manual configuration efforts.
