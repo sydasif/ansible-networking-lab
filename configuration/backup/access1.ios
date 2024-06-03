@@ -1,8 +1,10 @@
 Building configuration...
 
-Current configuration : 1604 bytes
+Current configuration : 3773 bytes
 !
-version 15.1
+! Last configuration change at 07:36:45 UTC Mon Jun 3 2024
+!
+version 15.2
 service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
@@ -14,37 +16,29 @@ boot-start-marker
 boot-end-marker
 !
 !
-logging discriminator EXCESS severity drops 6 msg-body drops EXCESSCOLL 
-logging buffered 50000
-logging console discriminator EXCESS
+enable secret 5 $1$qh7C$hGyIRdsAGYXBwfeF5gqpo.
 !
-username admin privilege 15 password 0 cisco
+username admin privilege 15 secret 5 $1$dD06$wuJkT0yclneLsgWsQ5UiJ1
 no aaa new-model
-no ip icmp rate-limit unreachable
 !
+!
+!
+!
+!
+!
+!
+!
+ip domain-name cisco.com
 ip cef
-!
-!
-no ip domain-lookup
-ip domain-name lab.com
 no ipv6 cef
-ipv6 multicast rpf use-bgp
-!
-!
-!
-!
 !
 !
 !
 spanning-tree mode pvst
 spanning-tree extend system-id
 !
-!
-!
-!
 vlan internal allocation policy ascending
 !
-ip tcp synwait-time 5
 ! 
 !
 !
@@ -54,45 +48,84 @@ ip tcp synwait-time 5
 !
 !
 !
-interface Ethernet0/0
- switchport mode access
 !
-interface Ethernet0/1
 !
-interface Ethernet0/2
 !
-interface Ethernet0/3
 !
-interface Ethernet1/0
+interface GigabitEthernet0/0
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet1/1
+interface GigabitEthernet0/1
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet1/2
+interface GigabitEthernet0/2
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet1/3
+interface GigabitEthernet0/3
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet2/0
+interface GigabitEthernet1/0
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet2/1
+interface GigabitEthernet1/1
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet2/2
+interface GigabitEthernet1/2
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet2/3
+interface GigabitEthernet1/3
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet3/0
+interface GigabitEthernet2/0
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet3/1
+interface GigabitEthernet2/1
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet3/2
+interface GigabitEthernet2/2
+ media-type rj45
+ negotiation auto
 !
-interface Ethernet3/3
+interface GigabitEthernet2/3
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/1
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/2
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet3/3
+ media-type rj45
+ negotiation auto
 !
 interface Vlan1
  description mgmt vlan
  ip address 172.16.10.13 255.255.255.0
 !
+ip forward-protocol nd
 !
 no ip http server
+no ip http secure-server
+!
+ip ssh version 2
 !
 !
 !
@@ -100,26 +133,39 @@ no ip http server
 !
 control-plane
 !
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
 banner login ^C
-Only Authorized Personal Allowed
-$$ Banner By Ansible $$
-^C
-banner motd ^C
-$$$ Welcome to the access1 $$$
- If not authorized leave it now
-^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
 !
 line con 0
- exec-timeout 0 0
- privilege level 15
- logging synchronous
 line aux 0
- exec-timeout 0 0
- privilege level 15
- logging synchronous
 line vty 0 4
- logging synchronous
  login local
- transport input telnet ssh
+ transport input ssh
+!
 !
 end

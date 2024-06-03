@@ -1,6 +1,6 @@
 Building configuration...
 
-Current configuration : 1775 bytes
+Current configuration : 1753 bytes
 !
 version 12.4
 service timestamps debug datetime msec
@@ -12,6 +12,7 @@ hostname core-sw
 boot-start-marker
 boot-end-marker
 !
+enable secret 5 $1$sgBk$LRzfsIys.5IqLPV8qCXTd0
 !
 no aaa new-model
 memory-size iomem 5
@@ -22,7 +23,7 @@ ip cef
 !
 !
 no ip domain lookup
-ip domain name lab.com
+ip domain name cisco.com
 !
 multilink bundle-name authenticated
 !
@@ -55,28 +56,26 @@ archive
 !
 !
 ip tcp synwait-time 5
+ip ssh version 2
 !
 !
 !
 !
 interface FastEthernet0/0
- ip address 172.16.10.12 255.255.255.0
- speed 100
- full-duplex
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
 !
 interface FastEthernet0/1
  no ip address
  shutdown
- speed 100
- full-duplex
+ duplex auto
+ speed auto
 !
 interface FastEthernet1/0
- duplex full
- speed 100
 !
 interface FastEthernet1/1
- duplex full
- speed 100
 !
 interface FastEthernet1/2
 !
@@ -107,7 +106,7 @@ interface FastEthernet1/14
 interface FastEthernet1/15
 !
 interface Vlan1
- no ip address
+ ip address 172.16.10.12 255.255.255.0
 !
 ip forward-protocol nd
 !
@@ -115,7 +114,6 @@ ip forward-protocol nd
 no ip http server
 no ip http secure-server
 !
-mac-address-table static c201.25dd.0000 interface FastEthernet1/0 vlan 1
 no cdp log mismatch duplex
 !
 !
@@ -153,6 +151,7 @@ line aux 0
 line vty 0 4
  logging synchronous
  login local
+ transport input ssh
 !
 !
 end

@@ -1,6 +1,6 @@
 Building configuration...
 
-Current configuration : 1290 bytes
+Current configuration : 1349 bytes
 !
 version 12.4
 service timestamps debug datetime msec
@@ -12,6 +12,7 @@ hostname r1
 boot-start-marker
 boot-end-marker
 !
+enable secret 5 $1$52.2$OCGGAx5Bh9ASfMH0JQlZU1
 !
 no aaa new-model
 memory-size iomem 5
@@ -22,7 +23,7 @@ ip cef
 !
 !
 no ip domain lookup
-ip domain name lab.com
+ip domain name cisco.com
 !
 multilink bundle-name authenticated
 !
@@ -55,6 +56,7 @@ archive
 !
 !
 ip tcp synwait-time 5
+ip ssh version 2
 !
 !
 !
@@ -120,7 +122,7 @@ line aux 0
 line vty 0 4
  logging synchronous
  login local
- transport input telnet ssh
+ transport input ssh
 !
 !
 end
