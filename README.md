@@ -281,25 +281,43 @@ By understanding and utilizing the configuration options available in Ansible, y
 
 ### [Ansible Inventory Setting](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#how-to-build-your-inventory)
 
-Inventory serves as the foundation for managing hosts within our infrastructure using Ansible. It consolidates information about target hosts, including their IP addresses or Fully Qualified Domain Names (FQDNs), into a single file called the inventory.
+Inventory serves as the foundation for managing hosts within our infrastructure using Ansible. It consolidates information about target hosts, including their IP addresses or Fully Qualified Domain Names (FQDNs). The simplest inventory is a single file with a list of hosts and groups. The default location for this file is `/etc/ansible/hosts`. You can specify a different inventory file at the command line using the `-i <path>` option or in configuration using `inventory`.
 
 #### Formats for Inventory Files
 
-You can create your inventory file in one of many formats, the most common being `INI` and [`YAML`](/yaml-into.md). A basic INI `/etc/ansible/hosts` might look like this:
+You can create your inventory file in various formats, the most common being `INI` and [`YAML`](https://yaml.org/). For this tutorial, see my [GNS3 Lab Setup](https://github.com/sydasif/gns3-lab).
+
+A basic INI format might look like this as per my lab setup:
 
 ```ini
 [router]
-r1 ansible_host=172.16.10.11
+172.16.10.11
 
 [core]
-core-sw ansible_host=172.16.10.12
+172.16.10.12
 
 [switch]
-access1 ansible_host=172.16.10.13
-access2 ansible_host=172.16.10.14
+172.16.10.13
+172.16.10.14
 ```
 
-The headings in brackets are group names, which are used in classifying hosts and deciding what hosts you are controlling at what times and for what purpose.
+The headings in brackets are group names. These group names are used to classify hosts, allowing you to decide which hosts to control at specific times and for particular purposes.
+
+To build an inventory file using DNS names instead of IP addresses, you would replace the IP with the DNS names of your devices. Here's how you can modify the example:
+
+```ini
+[router]
+r1
+
+[core]
+core-sw
+
+[switch]
+access1
+access2
+```
+
+Ensure that the DNS names you use are resolvable from the system where you are running Ansible. This means that your DNS settings should be correctly configured to resolve these names to the appropriate IP addresses.
 
 Here’s that same basic inventory file in YAML format:
 
@@ -308,18 +326,14 @@ all:
   children:
     router:
       hosts:
-        r1:
-          ansible_host: 172.16.10.11
+        172.16.10.11:
     core:
       hosts:
-        core-sw:
-          ansible_host: 172.16.10.12
+        172.16.10.12:
     switch:
       hosts:
-        access1:
-          ansible_host: 172.16.10.13
-        access2:
-          ansible_host: 172.16.10.14
+        172.16.10.13:
+        172.16.10.14:
 ```
 
 In this YAML inventory, `all` is the top-level group that contains all hosts and groups. The `hosts` key under `all` lists each host along with its properties, such as `ansible_host`. The `children` key under `all` contains subgroups like `router`, `core`, and `switch`, each with their respective hosts. This structure ensures the inventory is organized and easily manageable.
@@ -363,6 +377,10 @@ r1 ansible_host=172.16.10.11 ansible_user=bob ansible_password=bob123
 [core]
 core-sw ansible_host=172.16.10.12 ansible_user=joe ansible_password=joe123
 
+[campus:children]
+router
+core
+
 [campus:vars]
 ansible_network_os=ios
 ansible_connection=network_cli
@@ -395,6 +413,9 @@ zolo@u22s:~/ansible-networking-lab$ ansible-inventory -i inventory.yaml --graph
   |  |--@switch:
   |  |  |--access1
   |  |  |--access2
+
+##################################################################################
+
 zolo@u22s:~/ansible-networking-lab$ ansible-inventory -i inventory.yaml --host r1
 {
     "ansible_connection": "network_cli",
