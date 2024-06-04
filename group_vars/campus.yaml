@@ -1,0 +1,6 @@
+---
+# group_vars/campus.yaml
+ansible_user: "admin"
+ansible_password: "cisco"
+ansible_network_os: ios
+ansible_connection: network_cli
